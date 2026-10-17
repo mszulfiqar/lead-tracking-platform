@@ -6,21 +6,42 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:watch": "vitest",
+    "test:e2e": "npm run test:e2e:prepare && playwright test",
+    "test:e2e:prepare": "tsx scripts/prepare-e2e.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate-dev-database.ts",
+    "db:create-test": "node scripts/create-test-database.mjs",
+    "auth:generate-schema": "auth generate --config src/lib/auth.ts --output src/db/auth-schema.ts --yes",
+    "operator:bootstrap": "tsx scripts/bootstrap-operator.ts"
   },
   "dependencies": {
+    "@better-auth/drizzle-adapter": "1.7.10",
+    "better-auth": "1.7.10",
+    "drizzle-orm": "0.45.4",
     "next": "16.4.2",
+    "pg": "8.23.1",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
     "@tailwindcss/turbopack": "^4",
-    "@types/node": "^20",
+    "@types/node": "24.19.2",
+    "@types/pg": "8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "auth": "1.7.10",
+    "drizzle-kit": "0.31.11",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "4.23.15",
+    "typescript": "^5",
+    "vitest": "5.0.5"
   }
 }

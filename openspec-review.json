@@ -1,0 +1,523 @@
+{
+  "id": "tenant-foundation-and-onboarding",
+  "title": "Tenant Foundation and Onboarding",
+  "deltaCount": 16,
+  "deltas": [
+    {
+      "spec": "authentication",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL provide one shared sign-in page for platform operators and client users.",
+      "requirement": {
+        "name": "Shared sign-in entry point",
+        "text": "The system SHALL provide one shared sign-in page for platform operators and client users.",
+        "scenarios": [
+          {
+            "name": "Unauthenticated user opens a protected route",
+            "rawText": "- **WHEN** a user without a valid session opens a protected application route\n- **THEN** the system SHALL direct the user to the shared sign-in page"
+          },
+          {
+            "name": "Public registration is unavailable",
+            "rawText": "- **WHEN** a visitor attempts to access public registration\n- **THEN** the system SHALL prevent public self-registration"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Shared sign-in entry point",
+          "text": "The system SHALL provide one shared sign-in page for platform operators and client users.",
+          "scenarios": [
+            {
+              "name": "Unauthenticated user opens a protected route",
+              "rawText": "- **WHEN** a user without a valid session opens a protected application route\n- **THEN** the system SHALL direct the user to the shared sign-in page"
+            },
+            {
+              "name": "Public registration is unavailable",
+              "rawText": "- **WHEN** a visitor attempts to access public registration\n- **THEN** the system SHALL prevent public self-registration"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "authentication",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL use Better Auth for authentication and PostgreSQL for persistent authentication data.",
+      "requirement": {
+        "name": "Secure authentication",
+        "text": "The system SHALL use Better Auth for authentication and PostgreSQL for persistent authentication data.",
+        "scenarios": [
+          {
+            "name": "Successful sign-in",
+            "rawText": "- **WHEN** a user submits valid credentials\n- **THEN** the system SHALL establish an authenticated session through Better Auth"
+          },
+          {
+            "name": "Invalid sign-in",
+            "rawText": "- **WHEN** a user submits invalid credentials\n- **THEN** the system SHALL reject authentication"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Secure authentication",
+          "text": "The system SHALL use Better Auth for authentication and PostgreSQL for persistent authentication data.",
+          "scenarios": [
+            {
+              "name": "Successful sign-in",
+              "rawText": "- **WHEN** a user submits valid credentials\n- **THEN** the system SHALL establish an authenticated session through Better Auth"
+            },
+            {
+              "name": "Invalid sign-in",
+              "rawText": "- **WHEN** a user submits invalid credentials\n- **THEN** the system SHALL reject authentication"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "authentication",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL verify authorization separately from authentication.",
+      "requirement": {
+        "name": "Authentication does not grant authorization",
+        "text": "The system SHALL verify authorization separately from authentication.",
+        "scenarios": [
+          {
+            "name": "Authenticated user has no authorized access",
+            "rawText": "- **WHEN** a user has a valid session but no authorized operator privileges or verified membership in an accessible organization\n- **THEN** the system SHALL deny protected application access"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Authentication does not grant authorization",
+          "text": "The system SHALL verify authorization separately from authentication.",
+          "scenarios": [
+            {
+              "name": "Authenticated user has no authorized access",
+              "rawText": "- **WHEN** a user has a valid session but no authorized operator privileges or verified membership in an accessible organization\n- **THEN** the system SHALL deny protected application access"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "authentication",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL verify the current authenticated session on the server before performing protected operations.",
+      "requirement": {
+        "name": "Protected operations verify the session",
+        "text": "The system SHALL verify the current authenticated session on the server before performing protected operations.",
+        "scenarios": [
+          {
+            "name": "Session is missing or invalid",
+            "rawText": "- **WHEN** a user requests a protected operation without a valid session\n- **THEN** the system SHALL reject the operation and SHALL NOT disclose protected data"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Protected operations verify the session",
+          "text": "The system SHALL verify the current authenticated session on the server before performing protected operations.",
+          "scenarios": [
+            {
+              "name": "Session is missing or invalid",
+              "rawText": "- **WHEN** a user requests a protected operation without a valid session\n- **THEN** the system SHALL reject the operation and SHALL NOT disclose protected data"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "operator-access",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL grant platform operator privileges only to authenticated users whose verified user IDs appear in the server-side operator allowlist.",
+      "requirement": {
+        "name": "Operator authorization uses a server-side allowlist",
+        "text": "The system SHALL grant platform operator privileges only to authenticated users whose verified user IDs appear in the server-side operator allowlist.",
+        "scenarios": [
+          {
+            "name": "Allowlisted operator signs in",
+            "rawText": "- **WHEN** an authenticated user's verified ID appears in the configured operator allowlist\n- **THEN** the system SHALL authorize the user for permitted operator operations"
+          },
+          {
+            "name": "User is not allowlisted",
+            "rawText": "- **WHEN** an authenticated user's verified ID does not appear in the operator allowlist\n- **THEN** the system SHALL NOT grant platform operator privileges"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Operator authorization uses a server-side allowlist",
+          "text": "The system SHALL grant platform operator privileges only to authenticated users whose verified user IDs appear in the server-side operator allowlist.",
+          "scenarios": [
+            {
+              "name": "Allowlisted operator signs in",
+              "rawText": "- **WHEN** an authenticated user's verified ID appears in the configured operator allowlist\n- **THEN** the system SHALL authorize the user for permitted operator operations"
+            },
+            {
+              "name": "User is not allowlisted",
+              "rawText": "- **WHEN** an authenticated user's verified ID does not appear in the operator allowlist\n- **THEN** the system SHALL NOT grant platform operator privileges"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "operator-access",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL authorize platform operators independently of client organization membership.",
+      "requirement": {
+        "name": "Operator access is independent of organization membership",
+        "text": "The system SHALL authorize platform operators independently of client organization membership.",
+        "scenarios": [
+          {
+            "name": "Operator has no organization membership",
+            "rawText": "- **WHEN** an allowlisted operator has a valid session but belongs to no organization\n- **THEN** the system SHALL allow access to authorized operator routes\n- **AND** SHALL NOT redirect the operator to a client onboarding or membership-required page"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Operator access is independent of organization membership",
+          "text": "The system SHALL authorize platform operators independently of client organization membership.",
+          "scenarios": [
+            {
+              "name": "Operator has no organization membership",
+              "rawText": "- **WHEN** an allowlisted operator has a valid session but belongs to no organization\n- **THEN** the system SHALL allow access to authorized operator routes\n- **AND** SHALL NOT redirect the operator to a client onboarding or membership-required page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "operator-access",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL NOT derive platform operator privileges from client-controlled data.",
+      "requirement": {
+        "name": "Operator privileges cannot be self-assigned",
+        "text": "The system SHALL NOT derive platform operator privileges from client-controlled data.",
+        "scenarios": [
+          {
+            "name": "User changes client-side role information",
+            "rawText": "- **WHEN** a user modifies client-side state, request data, URL parameters, or organization role information to claim operator privileges\n- **THEN** the system SHALL reject the unauthorized privilege claim"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Operator privileges cannot be self-assigned",
+          "text": "The system SHALL NOT derive platform operator privileges from client-controlled data.",
+          "scenarios": [
+            {
+              "name": "User changes client-side role information",
+              "rawText": "- **WHEN** a user modifies client-side state, request data, URL parameters, or organization role information to claim operator privileges\n- **THEN** the system SHALL reject the unauthorized privilege claim"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "operator-access",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL verify operator authorization on the server for every protected operator operation.",
+      "requirement": {
+        "name": "Operator routes enforce server-side authorization",
+        "text": "The system SHALL verify operator authorization on the server for every protected operator operation.",
+        "scenarios": [
+          {
+            "name": "Non-operator requests an operator operation",
+            "rawText": "- **WHEN** an authenticated user without operator privileges requests a protected operator operation\n- **THEN** the system SHALL deny the operation\n- **AND** SHALL NOT disclose protected operator data or perform the requested mutation"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Operator routes enforce server-side authorization",
+          "text": "The system SHALL verify operator authorization on the server for every protected operator operation.",
+          "scenarios": [
+            {
+              "name": "Non-operator requests an operator operation",
+              "rawText": "- **WHEN** an authenticated user without operator privileges requests a protected operator operation\n- **THEN** the system SHALL deny the operation\n- **AND** SHALL NOT disclose protected operator data or perform the requested mutation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "organization-onboarding",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL allow an authorized platform operator to create client user accounts without enabling public self-registration.",
+      "requirement": {
+        "name": "Operator-created client accounts",
+        "text": "The system SHALL allow an authorized platform operator to create client user accounts without enabling public self-registration.",
+        "scenarios": [
+          {
+            "name": "Operator creates a client account",
+            "rawText": "- **WHEN** an authorized operator submits valid client account details\n- **THEN** the system creates the client account through supported server-side authentication APIs\n- **AND** the system reports success only after verifying account creation"
+          },
+          {
+            "name": "Unauthorized account creation",
+            "rawText": "- **WHEN** a user without platform operator privileges attempts to create a client account\n- **THEN** the system rejects the request\n- **AND** no client account is created"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Operator-created client accounts",
+          "text": "The system SHALL allow an authorized platform operator to create client user accounts without enabling public self-registration.",
+          "scenarios": [
+            {
+              "name": "Operator creates a client account",
+              "rawText": "- **WHEN** an authorized operator submits valid client account details\n- **THEN** the system creates the client account through supported server-side authentication APIs\n- **AND** the system reports success only after verifying account creation"
+            },
+            {
+              "name": "Unauthorized account creation",
+              "rawText": "- **WHEN** a user without platform operator privileges attempts to create a client account\n- **THEN** the system rejects the request\n- **AND** no client account is created"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "organization-onboarding",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL associate each provisioned client account with the intended organization and approved client role.",
+      "requirement": {
+        "name": "Client organization membership",
+        "text": "The system SHALL associate each provisioned client account with the intended organization and approved client role.",
+        "scenarios": [
+          {
+            "name": "Client account is assigned to an organization",
+            "rawText": "- **WHEN** an authorized operator provisions a client account for an organization\n- **THEN** the account receives the intended organization membership and approved client role\n- **AND** the account receives no platform operator privileges"
+          },
+          {
+            "name": "Invalid organization assignment",
+            "rawText": "- **WHEN** provisioning references an invalid or unauthorized organization\n- **THEN** the system rejects the operation without creating an incorrectly assigned account"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Client organization membership",
+          "text": "The system SHALL associate each provisioned client account with the intended organization and approved client role.",
+          "scenarios": [
+            {
+              "name": "Client account is assigned to an organization",
+              "rawText": "- **WHEN** an authorized operator provisions a client account for an organization\n- **THEN** the account receives the intended organization membership and approved client role\n- **AND** the account receives no platform operator privileges"
+            },
+            {
+              "name": "Invalid organization assignment",
+              "rawText": "- **WHEN** provisioning references an invalid or unauthorized organization\n- **THEN** the system rejects the operation without creating an incorrectly assigned account"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "organization-onboarding",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL allow an authorized operator to set an initial client password using a password-setting mechanism supported by the installed authentication library.",
+      "requirement": {
+        "name": "Initial client password",
+        "text": "The system SHALL allow an authorized operator to set an initial client password using a password-setting mechanism supported by the installed authentication library.",
+        "scenarios": [
+          {
+            "name": "Initial password is set",
+            "rawText": "- **WHEN** an authorized operator provisions a client account with a valid initial password\n- **THEN** the password is processed using the authentication library's supported secure password-storage mechanism\n- **AND** the client can authenticate using the initial credentials"
+          },
+          {
+            "name": "Password confidentiality",
+            "rawText": "- **WHEN** the system processes or stores an initial password\n- **THEN** it never stores or logs the password in plaintext\n- **AND** it does not expose the password through URLs, analytics, error messages, or unrelated responses"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Initial client password",
+          "text": "The system SHALL allow an authorized operator to set an initial client password using a password-setting mechanism supported by the installed authentication library.",
+          "scenarios": [
+            {
+              "name": "Initial password is set",
+              "rawText": "- **WHEN** an authorized operator provisions a client account with a valid initial password\n- **THEN** the password is processed using the authentication library's supported secure password-storage mechanism\n- **AND** the client can authenticate using the initial credentials"
+            },
+            {
+              "name": "Password confidentiality",
+              "rawText": "- **WHEN** the system processes or stores an initial password\n- **THEN** it never stores or logs the password in plaintext\n- **AND** it does not expose the password through URLs, analytics, error messages, or unrelated responses"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "organization-onboarding",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL handle provisioning failures without granting unauthorized access or reporting unverified success.",
+      "requirement": {
+        "name": "Secure onboarding failure handling",
+        "text": "The system SHALL handle provisioning failures without granting unauthorized access or reporting unverified success.",
+        "scenarios": [
+          {
+            "name": "Account provisioning fails",
+            "rawText": "- **WHEN** organization or account provisioning fails\n- **THEN** the system reports the failure accurately\n- **AND** it does not report onboarding as complete unless the required state has been verified"
+          },
+          {
+            "name": "Public registration remains disabled",
+            "rawText": "- **WHEN** an unauthenticated visitor attempts public self-registration\n- **THEN** the system rejects the registration request\n- **AND** client account creation remains restricted to authorized operator provisioning"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Secure onboarding failure handling",
+          "text": "The system SHALL handle provisioning failures without granting unauthorized access or reporting unverified success.",
+          "scenarios": [
+            {
+              "name": "Account provisioning fails",
+              "rawText": "- **WHEN** organization or account provisioning fails\n- **THEN** the system reports the failure accurately\n- **AND** it does not report onboarding as complete unless the required state has been verified"
+            },
+            {
+              "name": "Public registration remains disabled",
+              "rawText": "- **WHEN** an unauthenticated visitor attempts public self-registration\n- **THEN** the system rejects the registration request\n- **AND** client account creation remains restricted to authorized operator provisioning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "tenant-isolation",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL verify a user's authorization for the relevant organization on the server before allowing organization-scoped operations.",
+      "requirement": {
+        "name": "Organization access is verified on the server",
+        "text": "The system SHALL verify a user's authorization for the relevant organization on the server before allowing organization-scoped operations.",
+        "scenarios": [
+          {
+            "name": "Member accesses an authorized organization",
+            "rawText": "- **WHEN** an authenticated user requests an organization-scoped resource for an organization they are authorized to access\n- **THEN** the system SHALL allow the operation according to the user's permissions"
+          },
+          {
+            "name": "User accesses an unauthorized organization",
+            "rawText": "- **WHEN** an authenticated user requests an organization-scoped resource for an organization they are not authorized to access\n- **THEN** the system SHALL deny the operation\n- **AND** SHALL NOT disclose the organization's protected data"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Organization access is verified on the server",
+          "text": "The system SHALL verify a user's authorization for the relevant organization on the server before allowing organization-scoped operations.",
+          "scenarios": [
+            {
+              "name": "Member accesses an authorized organization",
+              "rawText": "- **WHEN** an authenticated user requests an organization-scoped resource for an organization they are authorized to access\n- **THEN** the system SHALL allow the operation according to the user's permissions"
+            },
+            {
+              "name": "User accesses an unauthorized organization",
+              "rawText": "- **WHEN** an authenticated user requests an organization-scoped resource for an organization they are not authorized to access\n- **THEN** the system SHALL deny the operation\n- **AND** SHALL NOT disclose the organization's protected data"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "tenant-isolation",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL NOT trust a client-supplied organization ID as evidence that a user may access that organization.",
+      "requirement": {
+        "name": "Client-supplied organization identifiers are not proof of authorization",
+        "text": "The system SHALL NOT trust a client-supplied organization ID as evidence that a user may access that organization.",
+        "scenarios": [
+          {
+            "name": "User substitutes another organization's ID",
+            "rawText": "- **WHEN** a user changes an organization ID in a URL, request body, query parameter, or other client-controlled input\n- **THEN** the system SHALL independently verify authorization for the requested organization\n- **AND** SHALL reject access when authorization is absent"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Client-supplied organization identifiers are not proof of authorization",
+          "text": "The system SHALL NOT trust a client-supplied organization ID as evidence that a user may access that organization.",
+          "scenarios": [
+            {
+              "name": "User substitutes another organization's ID",
+              "rawText": "- **WHEN** a user changes an organization ID in a URL, request body, query parameter, or other client-controlled input\n- **THEN** the system SHALL independently verify authorization for the requested organization\n- **AND** SHALL reject access when authorization is absent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "tenant-isolation",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL scope organization-owned data access to the authorized organization.",
+      "requirement": {
+        "name": "Organization-scoped reads and writes are tenant-isolated",
+        "text": "The system SHALL scope organization-owned data access to the authorized organization.",
+        "scenarios": [
+          {
+            "name": "Authorized member reads organization data",
+            "rawText": "- **WHEN** a member reads organization-owned data\n- **THEN** the system SHALL return only data belonging to an organization the member is authorized to access"
+          },
+          {
+            "name": "User attempts a cross-tenant mutation",
+            "rawText": "- **WHEN** a user attempts to create, modify, or delete organization-owned data outside an organization they are authorized to access\n- **THEN** the system SHALL reject the operation\n- **AND** SHALL leave the unauthorized organization's data unchanged"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Organization-scoped reads and writes are tenant-isolated",
+          "text": "The system SHALL scope organization-owned data access to the authorized organization.",
+          "scenarios": [
+            {
+              "name": "Authorized member reads organization data",
+              "rawText": "- **WHEN** a member reads organization-owned data\n- **THEN** the system SHALL return only data belonging to an organization the member is authorized to access"
+            },
+            {
+              "name": "User attempts a cross-tenant mutation",
+              "rawText": "- **WHEN** a user attempts to create, modify, or delete organization-owned data outside an organization they are authorized to access\n- **THEN** the system SHALL reject the operation\n- **AND** SHALL leave the unauthorized organization's data unchanged"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "tenant-isolation",
+      "operation": "ADDED",
+      "description": "Add requirement: The system SHALL reject unauthorized organization-scoped operations without exposing protected information.",
+      "requirement": {
+        "name": "Authorization failures are handled safely",
+        "text": "The system SHALL reject unauthorized organization-scoped operations without exposing protected information.",
+        "scenarios": [
+          {
+            "name": "Unauthenticated user requests organization data",
+            "rawText": "- **WHEN** a user without a valid authenticated session requests organization-scoped data\n- **THEN** the system SHALL reject the request\n- **AND** SHALL NOT disclose organization data"
+          },
+          {
+            "name": "Cross-tenant access is attempted during testing",
+            "rawText": "- **WHEN** an automated security test attempts to access another organization's protected data\n- **THEN** the test SHALL verify that access is denied and protected data remains inaccessible"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "name": "Authorization failures are handled safely",
+          "text": "The system SHALL reject unauthorized organization-scoped operations without exposing protected information.",
+          "scenarios": [
+            {
+              "name": "Unauthenticated user requests organization data",
+              "rawText": "- **WHEN** a user without a valid authenticated session requests organization-scoped data\n- **THEN** the system SHALL reject the request\n- **AND** SHALL NOT disclose organization data"
+            },
+            {
+              "name": "Cross-tenant access is attempted during testing",
+              "rawText": "- **WHEN** an automated security test attempts to access another organization's protected data\n- **THEN** the test SHALL verify that access is denied and protected data remains inaccessible"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "root": {
+    "path": "C:\\Users\\HP\\Desktop\\vibe-coded\\lead-tracking-platform",
+    "source": "nearest"
+  }
+}
